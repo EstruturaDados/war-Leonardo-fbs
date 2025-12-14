@@ -1,3 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_LETTER 25
+#define MAX_PLAYER 5
+
+struct Territorio
+{
+    char nome[MAX_LETTER];
+    char cor[MAX_LETTER];
+    int tropas;
+};
+
+/*função para evitar que o \n fiquei ocasionando erro na entrada de
+informaçãoes*/
+void limpar_buffer()
+{
+    int c; // Variável temporária para armazenar cada caractere lido
+    // O loop continua enquanto o caractere lido não for nem '\n' nem EOF
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+
+// qtd de jogador, opcaos limitadas, ao acessa já colher informações
+int main()
+{
+    struct Territorio territorio[MAX_PLAYER];
+    int qtdTerritorio = 0;
+    int opcao;
+
+    do // para ficar em loop o menu senão a cada escolha seria encerrado o prog.
+    {
+        // Menu dentro do loop se não da bretch
+        printf("Bem-vindo ao WAR\n");
+        printf("1 - Criar territorios\n");
+        printf("2 - Listar territorios\n");
+        printf("0 - Fim de jogo\n");
+
+        // coleta informacao
+        // %d espera um numero int
+        scanf("%d", &opcao);
+        limpar_buffer();
+
+        switch (opcao)
+        {
+        case 1:
+            printf("Territorio\n");
+
+                printf("Digite o nome do seu territorio:\n");
+                fgets(territorio[qtdTerritorio].nome, MAX_LETTER, stdin);
+
+                printf("Digite a cor do seu territorio:\n");
+                fgets(territorio[qtdTerritorio].cor, MAX_LETTER, stdin);
+
+                printf("Digite a quantidade de tropa que tem seu territorio:\n");
+                scanf("%d", &territorio[qtdTerritorio].tropas);
+                printf("Territorio cadastrado.");
+                qtdTerritorio++;
+            break;
+
+        case 2:
+            if (qtdTerritorio == 0)
+            {
+                printf("Lamento, sem cadastros..\n");
+            }
+            else
+            {
+                for (int i = 0; i < qtdTerritorio; i++)
+                {
+                    printf("\nTerritorio %d\n", i);
+                    printf("\nNome:%s\n", territorio[i].nome);
+                    printf("\nCor: %s\n", territorio[i].cor);
+                    printf("\nTropas: %d\n", territorio[i].tropas);
+                }
+            }
+            break;
+
+        case 0:
+            printf("A guerra acabou por aqui entao..\n");
+            break;
+
+        default:
+            printf("Essa opcao nao existe bisonho. Tente novamente EV!");
+            break;
+        }
+    } while (opcao != 0);
+    return 0;
+}
 // ============================================================================
 //         PROJETO WAR ESTRUTURADO - DESAFIO DE CÓDIGO
 // ============================================================================
